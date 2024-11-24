@@ -1,0 +1,1 @@
+java -jar junit-platform-console-standalone-1.9.3.jar -cp build --scan-class-path
