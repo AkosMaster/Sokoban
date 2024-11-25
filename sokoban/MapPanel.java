@@ -14,9 +14,9 @@ public class MapPanel extends JPanel implements KeyListener {
 
 	HashMap<String, BufferedImage> sprites;
 
-	void loadSprites() {
+	void loadSprites() throws IOException {
 		sprites = new HashMap<String, BufferedImage>();
-		try {
+		/*try {*/
 			sprites.put("bg", ImageIO.read(new File("sprites/bg2.png")));
 			sprites.put("wall", ImageIO.read(new File("sprites/wall.png")));                
         	sprites.put("box1", ImageIO.read(new File("sprites/box1.png")));
@@ -29,20 +29,21 @@ public class MapPanel extends JPanel implements KeyListener {
             sprites.put("icebox", ImageIO.read(new File("sprites/icebox.png")));
             sprites.put("key", ImageIO.read(new File("sprites/key.png")));
             sprites.put("door", ImageIO.read(new File("sprites/door.png")));
-       	} catch (IOException ex) {
+       	/*} catch (IOException ex) {
             System.out.println("could not load sprites");
-       	}
+            System.exit(1);
+       	}*/
 	}
 
     Map map = null;
 
-	public MapPanel(int tilesize) {
+	public MapPanel(int tilesize) throws IOException {
         this.tilesize = tilesize;
 		loadSprites();       	
         addKeyListener(this);
 	}
 
-    void setMap(Map map) {
+    public void setMap(Map map) {
         this.map = map;
         this.setSize(tilesize * map.getWidth(), tilesize * map.getHeight());
     }
@@ -131,22 +132,22 @@ public class MapPanel extends JPanel implements KeyListener {
                 map.setObjectAt(editPos, null);
                 break;
             case KeyEvent.VK_1:
-                map.setObjectAt(editPos, new Wall(map, editPos));
+                new Wall(map, editPos);
                 break;
             case KeyEvent.VK_2:
-                map.setObjectAt(editPos, new Box(map, editPos));
+                new Box(map, editPos);
                 break;
             case KeyEvent.VK_3:
-                map.setObjectAt(editPos, new HeavyBox(map, editPos));
+                new HeavyBox(map, editPos);
                 break;
             case KeyEvent.VK_4:
-                map.setObjectAt(editPos, new IceBox(map, editPos));
+                new IceBox(map, editPos);
                 break;
             case KeyEvent.VK_5:
-                map.setObjectAt(editPos, new Door(map, editPos));
+                new Door(map, editPos);
                 break;
             case KeyEvent.VK_6:
-                map.setObjectAt(editPos, new Key(map, editPos));
+                new Key(map, editPos);
                 break;
             case KeyEvent.VK_7:
                 map.setGoal(editPos, !map.isGoal(editPos));

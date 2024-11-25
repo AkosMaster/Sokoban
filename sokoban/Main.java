@@ -8,26 +8,11 @@ import java.util.*;
 /** A program főosztálya. */
 public class Main {
 
-	/** A "maps" mappában lévő fájlok listája, ezekből lehet választani a főmenüben. (és "új pálya" opció) */
-	static ArrayList<String> getMapList() {
-		ArrayList<String> maps = new ArrayList<>();
-
-		maps.add("<create new map>");
-
-		File mapdir = new File("maps");
-      	File[] mapfiles = mapdir.listFiles();
-
-      	for (File file : mapfiles) {
-      		maps.add(file.getName());
-      	}
-      	return maps;
-	}
-
 	/** Felhoz egy popup ablakot, ami a játékostól egy pálya választását kéri, és ennek a nevét visszaadja. Ez a játék főmenüje. */
 	static String mapSelector() {
 		JPanel menu = new JPanel();
 
-		ArrayList<String> maps = getMapList();
+		ArrayList<String> maps = Map.getMapList();
 
 		JComboBox<String> mapSelector = new JComboBox<String>(maps.toArray(new String[0]));
 
@@ -49,7 +34,7 @@ public class Main {
 
 		if (mapFile.equals("<create new map>")) {
 
-			String sizeStr = JOptionPane.showInputDialog("Map size: ");
+			String sizeStr = JOptionPane.showInputDialog(null, "Map size: ", "", JOptionPane.QUESTION_MESSAGE);
 			try {
 				int size = Integer.parseInt(sizeStr);
 				map = new Map(size,size, null);
@@ -68,7 +53,7 @@ public class Main {
 	static int tilesize = 700/12;
 
 	/** Egy megadott pályához létrehoz egy ablakot, amely ezt kirajzolja, és kezeli a bemeneket. */
-	static JFrame createGameFrame(Map map) {
+	static JFrame createGameFrame(Map map) throws IOException {
 
 		JFrame frame = new JFrame("sokoban");
 		

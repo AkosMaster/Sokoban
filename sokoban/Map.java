@@ -36,7 +36,7 @@ public class Map implements Serializable {
 		goals[pos.x][pos.y] = is_goal;
 	}
 
-	boolean isWin() {
+	public boolean isWin() {
 		boolean hasGoal = false;
 		boolean win = true;
 		for (int x = 0; x < width; x++) {
@@ -50,13 +50,13 @@ public class Map implements Serializable {
 				}
 			}
 		}
-		return hasGoal && win && !panel.isDevMode();
+		return hasGoal && win;
 	}
 
 	MapPanel getPanel() {
 		return panel;
 	}
-	void setPanel(MapPanel panel) {
+	public void setPanel(MapPanel panel) {
 		this.panel = panel;
 	}
 
@@ -97,6 +97,21 @@ public class Map implements Serializable {
 
         return map;
     }
+
+    /** A "maps" mappában lévő fájlok listája, ezekből lehet választani a főmenüben. (és "új pálya" opció) */
+	static public ArrayList<String> getMapList() {
+		ArrayList<String> maps = new ArrayList<>();
+
+		maps.add("<create new map>");
+
+		File mapdir = new File("maps");
+      	File[] mapfiles = mapdir.listFiles();
+
+      	for (File file : mapfiles) {
+      		maps.add(file.getName());
+      	}
+      	return maps;
+	}
 }
 
 
